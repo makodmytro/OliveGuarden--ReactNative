@@ -55,7 +55,6 @@ function Login({navigation}) {
                     setAlertText(["Enter your phone", "number to start"])
                     setphoneNumber('')
                     navigation.navigate('Main')
-                    Alert.alert('Success!')
                 } else {
                     Alert.alert('Incorrect Code!')
                     setVerifyCode('')

@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, Modal, ScrollView, Text, TouchableOpacity, Pressable, Image, TextInput, Alert } from 'react-native';
 import { dish1, prev, checkout, more } from '../assets/images';
+import { DataContext } from '../context/dataContext';
+import { FilterContext } from '../context/filterContext';
 import { dishArrays, sideList, drinkList } from '../utils/dishData';
+import SearchEngin from '../utils/searchEngin';
 import Counter from './include/counter';
 
 function Dishlist(props) {
+    const { dishlist, orderlist, setOrderlist } = useContext(DataContext);
+    const { searchword } = useContext(FilterContext)
     const [modalDetailVisible, setDetailModalVisible] = useState(false);
-    const [displayData, setDisplayData] = useState([]);
+    const [_dishlist, setDishs] = useState(dishlist);
+    const [ selDish, setSelDish ] = useState({});
 
-    const orderCount = 3;
     const text = "(Max 3)"
 
     const gotoStart = () => {
@@ -16,10 +21,9 @@ function Dishlist(props) {
     }
 
     const filterengin = (props) => {
-        var searchword = ""
         var filterType = 'dish' + (props.dishIndex % 5 + 1);
         var midtmp = []
-        dishArrays.forEach((ele,idx) => {
+        dishlist.forEach((ele,idx) => {
             if(ele.type === filterType){
                 midtmp.push(ele);
             }
@@ -28,25 +32,32 @@ function Dishlist(props) {
         if(searchword === "") {
             return midtmp;
         } else {
-            // midtmp.forEach(element => {
-                
-            // });
+            return SearchEngin(midtmp, ['title','price', 'description', 'type'], searchword)
         }
     }
 
+    const openAddCartModal = (ele) => {
+        setSelDish(ele)
+        setDetailModalVisible(true);
+    }
+
+    const closeAddCartmodal = () => {
+        setOrderlist((prev) => [...prev, selDish])
+        setDetailModalVisible(false)
+    }
+
     useEffect(()=>{
-        setDisplayData(filterengin(props))
-    },[props])
+        setDishs(filterengin(props))
+    }, [searchword])
 
     return (
         <ScrollView className="container">
             <View className="flex flex-row flex-wrap">
                 {
-                    displayData.map((ele, idx) =>
+                    _dishlist.map((ele, idx) =>
                         <View key={idx} className="w-[25%] animate-fadeIn">
-                            <View className="p-[10px]">
-                                {/* <TouchableOpacity onPress={() => setDetailModalVisible(true)}> */}
-                                <TouchableOpacity onPress={() => setDetailModalVisible(true)}>
+                            <View  className="px-[25px] py-[18px]">
+                                <TouchableOpacity onPress={() => openAddCartModal(ele)}>
                                     <View className="pb-[13px]">
                                         <Image source={ele.img} className="w-full h-auto rounded-[16px]" />
                                     </View>
@@ -170,7 +181,7 @@ function Dishlist(props) {
                                 </View>
                             </View>
 
-                            <Pressable className="w-full h-[60px] mt-[26px] bg-[#b2ba21] justify-center" onPress={() => setDetailModalVisible(!modalDetailVisible)}>
+                            <Pressable className="w-full h-[60px] mt-[26px] bg-[#b2ba21] justify-center" onPress={() => closeAddCartmodal()}>
                                 <Text className="text-center text-white leading-[37px] text-[27px]">Add to Cart</Text>
                             </Pressable>
                         </View>

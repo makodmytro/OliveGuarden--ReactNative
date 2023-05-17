@@ -1,6 +1,25 @@
-import React, { useContext, createContext } from 'react'
+import React, { createContext, useState } from 'react'
 
-const defaultValue = {}
+const defaultValues = {
+    category : "",
+    searchword : ""
+}
 
-const FilterContext = createContext()
+export const FilterContext = createContext(defaultValues);
+
+export default function FilterContextProvider({ children }) {
+    const [category, setCategory] = useState("");
+    const [searchword, setSearchwrod] = useState("");
+
+    return (
+        <FilterContext.Provider value={{
+            category,
+            searchword,
+            setCategory,
+            setSearchwrod
+        }}>
+            {children}
+        </FilterContext.Provider>
+    )
+}
 

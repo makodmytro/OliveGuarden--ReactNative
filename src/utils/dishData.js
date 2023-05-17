@@ -321,18 +321,6 @@ const drinkList = [
     },
 ]
 
-const cartList = [
-    {
-        img: dish1,
-        title: 'Jumbo Burger',
-        quantity: '3',
-        price: '$6.99',
-        roll: true,
-        side: 'Tomato-Cucumber Salad',
-        drink: 'Drink2',
-    }
-]
-
 export {
-    dishArrays, sideList, drinkList, cartList
+    dishArrays, sideList, drinkList
 }
