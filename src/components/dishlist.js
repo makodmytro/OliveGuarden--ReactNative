@@ -15,16 +15,35 @@ function Dishlist(props) {
         setDetailModalVisible(false)
     }
 
+    const filterengin = (props) => {
+        var searchword = ""
+        var filterType = 'dish' + (props.dishIndex % 5 + 1);
+        var midtmp = []
+        dishArrays.forEach((ele,idx) => {
+            if(ele.type === filterType){
+                midtmp.push(ele);
+            }
+        })
+
+        if(searchword === "") {
+            return midtmp;
+        } else {
+            // midtmp.forEach(element => {
+                
+            // });
+        }
+    }
+
     useEffect(()=>{
-        setDisplayData
+        setDisplayData(filterengin(props))
     },[props])
 
     return (
         <ScrollView className="container">
             <View className="flex flex-row flex-wrap">
                 {
-                    dishArrays.map((ele, idx) =>
-                        <View key={idx} className="w-[25%]">
+                    displayData.map((ele, idx) =>
+                        <View key={idx} className="w-[25%] animate-fadeIn">
                             <View className="p-[10px]">
                                 {/* <TouchableOpacity onPress={() => setDetailModalVisible(true)}> */}
                                 <TouchableOpacity onPress={() => setDetailModalVisible(true)}>

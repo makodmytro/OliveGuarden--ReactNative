@@ -19,10 +19,12 @@ function Main({ navigation }) {
     const [selCateTitle, setSelCateTitle] = useState(null);
     
     const handleItemClick = (index) => {
+        if(scrollDishTypeMenu[index] === "") {
+            return;
+        }
         setSelCateTitle(index);
         const screenWidth = Dimensions.get('window').width;
         
-        // Calculate the scroll position to center the item
         const scrollX = index * 200 - screenWidth / 2 + 200 / 2;
         scrollViewRef.current.scrollTo({ x: scrollX, y: 0, animated: true });
     };
@@ -70,7 +72,7 @@ function Main({ navigation }) {
                             scrollDishTypeMenu.map((ele, idx) =>
                                 <View className="w-[200px] justify-center pb-[10px]" key={idx}>
                                     <Pressable onPress={() => { handleItemClick(idx) }}>
-                                    <Text className={"text-[25px] leading-[27px] font-[700] text-center text-" + (selCateTitle ===idx ? "white" : "[#C2C8CB]")}>{ele}</Text>
+                                    <Text className={"text-[25px] leading-[27px] font-[700] text-center text-[#C2C8CB] text-" + (selCateTitle ===idx ? "white" : "")}>{ele}</Text>
                                     </Pressable>
                                 </View>
                             )
@@ -79,10 +81,10 @@ function Main({ navigation }) {
                 </ImageBackground>
             </View>
 
-            <DishList dishIndex={selCateTitle}></DishList>
+            <DishList dishIndex={selCateTitle} searchword={""}></DishList>
             <Checkout visible={chkoutModalVisible} visibleAction={setChkoutModalVisible}></Checkout>
         </View >
     )
 }
 
-export default Main;
+export default Main
