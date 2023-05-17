@@ -36,7 +36,7 @@ function Login({navigation}) {
                 setphoneNumber((prev) => prev.slice(0,-1))
                 return;
             }
-            if(phoneNumber.length>=13){
+            if(phoneNumber.length>=10){
                 setInputSttFlg(true);
                 return;
             }

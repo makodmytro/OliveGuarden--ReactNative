@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { View, Modal, ScrollView, Text, TouchableOpacity, Pressable, Image, TextInput, Alert } from 'react-native';
-import { dish1, prev, checkout, more } from '../assets/images';
+import { dish1, prev, chk_fal, chk_tru } from '../assets/images';
 import { DataContext } from '../context/dataContext';
 import { FilterContext } from '../context/filterContext';
 import { dishArrays, sideList, drinkList } from '../utils/dishData';
@@ -48,7 +48,7 @@ function Dishlist(props) {
 
     useEffect(()=>{
         setDishs(filterengin(props))
-    }, [searchword])
+    }, [searchword]);
 
     return (
         <ScrollView className="container">
@@ -77,7 +77,6 @@ function Dishlist(props) {
                 }
 
                 <Modal animationType="slide" transparent={true} visible={modalDetailVisible} onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
                     setDetailModalVisible(!modalDetailVisible);
                 }}>
 
@@ -101,26 +100,31 @@ function Dishlist(props) {
                                         </View>
                                     </View>
 
-                                    <View className="flex flex-row h-[63px] justify-between">
-                                        <View className="flex flex-row justify-between">
+                                    <View className="flex flex-row h-[63px] w-[729px] justify-between">
+                                        <View className="flex flex-row w-[179px] justify-between">
                                             <Counter size="lg"></Counter>
                                         </View>
-                                        <View className="w-1/4">
-                                            <Text className="text-[46px] text-[#b2ba21] font-[700]">$6.99</Text>
+                                        <View className="w-[169px]">
+                                            <Text className="text-[46px] text-[#5A5A5A] leading-[63px] font-[700]">$6.99</Text>
                                         </View>
                                     </View>
 
                                     <View className="flex">
-                                        <View className="static pb-[22px]">
-                                            <Text className="text-[16px] text-[#222] font-[700]">Roll Option</Text>
-                                            <View className="h-[2px] w-[25px] bg-[#b2ba21] absolute bottom-[17px] left-0"></View>
+                                        <View className="pb-[20px]">
+                                            <View className="pb-[16px]">
+                                                <Text className="text-[16px] font-[700] leading-[22px] text-[#222222]">Select Size</Text>
+                                            </View>
+                                            <View>
+                                                <TextInput className="bg-[#F5F5F5] rounded-[10px] w-[729px] h-[50px] px-[15px]"></TextInput>
+                                            </View>
                                         </View>
-                                        <View className="pb-[16px] flex flex-row">
-                                            <Image source={checkout}></Image><Text className="pl-[12px]">Roll</Text>
-                                        </View>
-                                        <View className="pb-[30px] flex flex-row">
-                                            <Image source={checkout}></Image>
-                                            <Text className="pl-[12px]">No Roll</Text>
+                                        <View className="pb-[30px]">
+                                            <View className="pb-[16px]">
+                                                <Text className="text-[16px] font-[700] leading-[22px] text-[#222222] ">Select Cone Type</Text>
+                                            </View>
+                                            <View>
+                                                <TextInput className="bg-[#F5F5F5] rounded-[10px] w-[729px] h-[50px] px-[15px]"></TextInput>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>
@@ -128,42 +132,18 @@ function Dishlist(props) {
                                 <View>
                                     <View>
                                         <View className="mt-[30px] static">
-                                            <Text className="text-[16px] text-[#222] font-[700]">Drinks <Text className="text-[#ec2121]">{text}</Text></Text>
+                                            <Text className="text-[16px] text-[#222] font-[700]">Mix-ins</Text>
                                             <View className="h-[2px] w-[25px] bg-[#b2ba21] absolute bottom-[-5px] left-0"></View>
                                         </View>
-                                        <View>
+                                        <View className="mt-[17px]">
                                             {
                                                 sideList.map((side, sidx) =>
                                                     <View className="flex flex-row justify-between py-[10px]" key={sidx}>
-                                                        <View>
-                                                            <Text className="text-[16px]">{side.title}</Text>
-                                                        </View>
-                                                        <Counter size="xs"></Counter>
-                                                    </View>
-                                                )
-                                            }
-                                            <View className="flex flex-row justify-between py-[10px]">
-                                                <View>
-                                                    <Text className="text-[16px]">Show more</Text>
-                                                </View>
-                                                <View>
-                                                    <Image source={more} className=""></Image>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </View>
-
-                                    <View>
-                                        <View className="static pb-[19px]">
-                                            <Text className="text-[16px] text-[#222] font-[700]">Drinks</Text>
-                                            <View className="h-[2px] w-[25px] bg-[#b2ba21] absolute bottom-[14px] left-0"></View>
-                                        </View>
-                                        <View>
-                                            {
-                                                drinkList.map((drink, didx) =>
-                                                    <View className="flex flex-row justify-between py-[9px]" key={didx}>
-                                                        <View>
-                                                            <Text className="text-[16px]">{drink.title}</Text>
+                                                        <View className="flex flex-row justify-center">
+                                                            <Pressable>
+                                                                <Image source={(sidx === 0 ? chk_tru : chk_fal)}></Image>
+                                                            </Pressable>
+                                                            <Text className="pl-[13px] text-[16px]">{side.title}</Text>
                                                         </View>
                                                         <Counter size="xs"></Counter>
                                                     </View>
@@ -172,16 +152,16 @@ function Dishlist(props) {
                                         </View>
                                     </View>
 
-                                    <View>
+                                    <View className="mt-[42px]">
                                         <View><Text className="text-[16px] text-[#222] font-[700]">Special Instructions</Text></View>
                                         <View>
-                                            <TextInput editable className="w-[729px] h-[173px] bg-[#f5f5f5] mt-[11px]"></TextInput>
+                                            <TextInput editable multiline={true} numberOfLines={5} h={5} className="w-[729px] h-[173px] bg-[#f5f5f5] mt-[11px] rounded-[10px] p-[15px]" style={{textAlignVertical: 'top'}}></TextInput>
                                         </View>
                                     </View>
                                 </View>
                             </View>
 
-                            <Pressable className="w-full h-[60px] mt-[26px] bg-[#b2ba21] justify-center" onPress={() => closeAddCartmodal()}>
+                            <Pressable className="w-full h-[60px] mt-[59px] bg-[#b2ba21] justify-center" onPress={() => closeAddCartmodal()}>
                                 <Text className="text-center text-white leading-[37px] text-[27px]">Add to Cart</Text>
                             </Pressable>
                         </View>

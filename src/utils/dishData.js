@@ -265,62 +265,23 @@ const sideList = [
         price: ''
     },
     {
-        title: 'Tbaked',
+        title: 'Ranchero Beans',
         price: ''
     },
     {
-        title: 'Tbaked',
+        title: 'Garden Salad',
         price: ''
     },
     {
-        title: 'Tbaked',
+        title: 'Tomato-Cucumber Salad',
         price: ''
     },
     {
-        title: 'Tbaked',
-        price: ''
-    },
-    {
-        title: 'Tbaked',
-        price: ''
-    },
-    {
-        title: 'Tbaked',
-        price: ''
-    },
-    {
-        title: 'Tbaked',
-        price: ''
-    },
-    {
-        title: 'Tbaked',
-        price: ''
-    },
-    {
-        title: 'Tbaked',
-        price: ''
-    },
-]
-
-const drinkList = [
-    {
-        title: 'Wine',
-        price: ''
-    },
-    {
-        title: 'Wine',
-        price: ''
-    },
-    {
-        title: 'Wine',
-        price: ''
-    },
-    {
-        title: 'Wine',
+        title: 'Fries',
         price: ''
     },
 ]
 
 export {
-    dishArrays, sideList, drinkList
+    dishArrays, sideList
 }

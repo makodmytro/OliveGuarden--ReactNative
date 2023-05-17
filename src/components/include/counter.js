@@ -23,19 +23,15 @@ function Counter(props) {
 
     return(
         <View className="flex flex-row justify-center">
-            <View>
-                <TouchableHighlight  onPress={minus} className="justify-center">
-                    <Image source={props.size === 'lg' ? minus_lg : minus_xs}></Image>
-                </TouchableHighlight >
-            </View>
-            <View className={props.size === 'lg' ? 'mx-[39px]' : (props.size === 'xs' ? 'mx-[25px]' : 'mx-[23px]')}>
+            <TouchableHighlight  onPress={minus} className="justify-center">
+                <Image source={props.size === 'lg' ? minus_lg : minus_xs}></Image>
+            </TouchableHighlight >
+            <View className={(props.size === 'lg' ? 'mx-[39px]' : (props.size === 'xs' ? 'mx-[25px]' : 'mx-[23px]')) + " justify-center"}>
                 <Text className={props.size === 'lg' ? 'text-[25px] leading-[34px]' : (props.size === 'xs' ? 'text-[18px] leading-[25px]' : 'text-[23px] leading-[31px]')}>{cartCnt}</Text>
             </View>
-            <View className="">
-                <TouchableHighlight  onPress={pluse} className="justify-center">
-                    <Image source={props.size === 'lg' ? plus_lg : plus_xs}></Image>
-                </TouchableHighlight >
-            </View>
+            <TouchableHighlight  onPress={pluse} className="justify-center">
+                <Image source={props.size === 'lg' ? plus_lg : plus_xs}></Image>
+            </TouchableHighlight >
         </View>
     )
 }

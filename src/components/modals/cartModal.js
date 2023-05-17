@@ -1,31 +1,40 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, Image, Pressable, Modal, Alert, ScrollView } from 'react-native';
-import { down } from '../../assets/images';
+import { down, cls_btn } from '../../assets/images';
 import Counter from '../include/counter';
 import { DataContext } from '../../context/dataContext';
 
 function CartModal(props) {
-    const { orderlist } = useContext(DataContext)
+    const { orderlist, setOrderlist } = useContext(DataContext)
     const [showMoreCart, setShowMoreCart] = useState(false)
     const [showOrderlist, setShowOrderlist] = useState(orderlist)
 
-    // useEffect(() => {
-    //     Alert.alert(JSON.stringify(orderlist))
-    //     // setShowOrderlist(orderlist)
-    // }, [orderlist])
+    useEffect(() => {
+        setShowOrderlist(orderlist)
+    }, [orderlist])
+
+    const delfunc = (idx) => {
+        setOrderlist((prev) => [
+            ...prev.slice(0, idx), 
+            ...prev.slice(idx + 1)
+        ])
+    }
 
     return (
         <View>
             <Modal animationType="fade" transparent={true} visible={props.visible} onRequestClose={() => {
                 props.visibleAction(!props.visible);
             }}>
-                <ScrollView className={"w-[630px] bg-white rounded-[10px] m-auto top-[100px] mr-[60px] mb-[200px]"}>
+                <ScrollView className={"w-[630px] bg-white rounded-[10px] h-fit m-auto top-[113px] mr-[60px] mb-[200px]"}>
                     <View className="static pt-[38px] pr-[42px] pl-[43px] pb-[35px]">
-                        <View><Text className="text-[25px] fong-[700]">Your Cart</Text></View>
+                        <View><Text className="text-[25px] font-[700]">Your Cart</Text></View>
                         {
                             showOrderlist.length === 0 ? (
-                                <View>
-                                    <Text className="">Order is not!</Text>
+                                <View className="justify-center items-center h-[400px]">
+                                    <Text className="text-[#ACACAC] font-[700] text-[40px] leading-[56px] my-[120px]">Your Cart don't exists!</Text>
+                                    {/* <Pressable className="bg-[#B2BA21] rounded-[7px] w-[234px] h-[50px] justify-center items-center" onPress={()=> { props.visibleAction(false); props.chkAction(true); }}>
+                                        <Text className="text-[16px] font-[700] text-[#fff] leading-[22px]">Add Cart</Text>
+                                    </Pressable> */}
                                 </View>
                             ) : (
                                 <View>
@@ -54,6 +63,7 @@ function CartModal(props) {
                                                         <Counter size="md"></Counter>
                                                     </View>
                                                     <View className="pl-[55px] pt-[9px]"><Text className="text-[23px] font-[600] text-[#b2ba21]">{ele.price}</Text></View>
+                                                    <View className="flex justify-center ml-auto"><Pressable onPress={() => delfunc(idx)}><Image className="w-[14px] h-[14px]" source={cls_btn}></Image></Pressable></View>
                                                 </View>
                                             )
                                         }
@@ -74,23 +84,23 @@ function CartModal(props) {
                                             </View>
                                             <View><Text className="text-[#b2ba21]">0.25</Text></View>
                                         </View>
-                                        <View className={"flex pl-[30px] pt-[3px] " + (showMoreCart ? "" : "hidden")} >
-                                            <View className="flex flex-row justify-between">
-                                                <View><Text>Online Ordering</Text></View>
-                                                <View><Text className="text-[#b2ba21]">$0.35</Text></View>
+                                        <View className={"flex" + (showMoreCart ? "" : "hidden")} >
+                                            <View className="flex flex-row justify-between pt-[13px]">
+                                                <Text>Online Ordering</Text>
+                                                <Text className="text-[#b2ba21]">$0.35</Text>
                                             </View>
-                                            <View className="flex flex-row justify-between">
-                                                <View><Text>Tip</Text></View>
-                                                <View><Text className="text-[#b2ba21]">$0.0</Text></View>
+                                            <View className="flex flex-row justify-between py-[10px]">
+                                                <Text>Tip</Text>
+                                                <Text className="text-[#b2ba21]">$0.0</Text>
                                             </View>
                                         </View>
-                                    </View>
-                                    <View className="flex flex-row justify-between pt-[25px]">
-                                        <Pressable className="w-[205px] h-[50px] justify-center items-center rounded-7px" onPress={() => { props.visibleAction(false); props.chkAction(true); }}>
-                                            <Text className="bg-[#b2ba21] w-[234px] leading-[22px] py-[14px] text-white text-[16px] text-center">CHECKOUT</Text>
-                                        </Pressable>
-                                        <View className="pl-[24px] pr-[23px] pb-[9px]">
-                                            <Text className="text-[#b2ba21] text-[23px] leading-[31px] py-[10px]">$10.14</Text>
+                                        <View className="flex flex-row justify-between pt-[25px]">
+                                            <Pressable className="w-[205px] h-[50px] justify-center items-center rounded-7px" onPress={() => { props.visibleAction(false); props.chkAction(true); }}>
+                                                <Text className="bg-[#b2ba21] w-[234px] leading-[22px] py-[14px] text-white text-[16px] text-center">CHECKOUT</Text>
+                                            </Pressable>
+                                            <View className="pl-[24px] pr-[23px] pb-[9px]">
+                                                <Text className="text-[#b2ba21] text-[23px] leading-[31px] py-[10px]">$10.14</Text>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>

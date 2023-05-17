@@ -16,9 +16,9 @@ export default function App() {
       <FilterContextProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
             <Stack.Screen name="Home" component={Start} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>
       </FilterContextProvider>
