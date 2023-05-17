@@ -6,12 +6,13 @@ import DishList from './components/dishlist'
 import CartModal from './components/modals/cartModal';
 import Checkout from './components/modals/checkout';
 
-const scrollDishTypeMenu = ['','','','','PASTA', 'CHICKEN SANDWICHES', 'APPETIZERS', 'SOUP AND SALADS', 'PIZZA', 'PASTA', 'CHICKEN SANDWICHES', 'APPETIZERS', 'SOUP AND SALADS', 'PIZZA', 'PASTA', 'CHICKEN SANDWICHES', 'APPETIZERS', 'SOUP AND SALADS', 'PIZZA',"",'','','']
+const deltaMenu = ['PASTA', 'CHICKEN SANDWICHES', 'APPETIZERS', 'SOUP AND SALADS', 'PIZZA', 'PASTA', 'CHICKEN SANDWICHES', 'APPETIZERS', 'SOUP AND SALADS', 'PIZZA']
 
 function Main({ navigation }) {
     const scrollViewRef = useRef(null);
     const [cartModalVisible, setCartModalVisible] = useState(false);
     const [chkoutModalVisible, setChkoutModalVisible] = useState(false);
+    const [scrollMenulist, setScrollMenulist] = useState(deltaMenu.concat(deltaMenu.concat(deltaMenu.concat(deltaMenu))))
     const badgeCount = 3;
     const gotoStart = () => {
         navigation.navigate('Home')
@@ -19,18 +20,20 @@ function Main({ navigation }) {
     const [selCateTitle, setSelCateTitle] = useState(null);
     
     const handleItemClick = (index) => {
-        if(scrollDishTypeMenu[index] === "") {
-            return;
-        }
-        setSelCateTitle(index);
         const screenWidth = Dimensions.get('window').width;
-        
+        // if(index <= 5){
+        //     index = index + 35
+        // } else if(index >= 36){
+        //     index -= 35
+        // }
         const scrollX = index * 200 - screenWidth / 2 + 200 / 2;
+        
         scrollViewRef.current.scrollTo({ x: scrollX, y: 0, animated: true });
+        setSelCateTitle(index);
     };
     
     useEffect(()=>{
-        handleItemClick(9)
+        handleItemClick(20)
     },[])
 
     return (
@@ -69,10 +72,10 @@ function Main({ navigation }) {
                 <ImageBackground source={union} className="h-[115px] w-full" resizeMode='cover'>
                     <ScrollView ref={scrollViewRef} showsHorizontalScrollIndicator={false} className="flex flex-row h-[90px] overflow-hidden" horizontal alwaysBounceHorizontal={true} snapToAlignment={'center'}>
                         {
-                            scrollDishTypeMenu.map((ele, idx) =>
+                            scrollMenulist.map((ele, idx) =>
                                 <View className="w-[200px] justify-center pb-[10px]" key={idx}>
                                     <Pressable onPress={() => { handleItemClick(idx) }}>
-                                    <Text className={"text-[25px] leading-[27px] font-[700] text-center text-[#C2C8CB] text-" + (selCateTitle ===idx ? "white" : "")}>{ele}</Text>
+                                    <Text className={"text-[25px] leading-[27px] font-[700] text-center text-[#C2C8CB] text-" + (selCateTitle === idx ? "white" : "")}>{ele}</Text>
                                     </Pressable>
                                 </View>
                             )
